@@ -8,7 +8,7 @@
  * @format
  */
 
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Text,
   NativeBaseProvider,
@@ -19,9 +19,7 @@ import {
   Center,
   Image,
 } from 'native-base';
-import Lottie from 'lottie-react-native';
-import Loading from './src/components/Loading/Loading';
-// import {StyleSheet} from 'react-native';
+import Loading from './src/components/Loading';
 
 // Color Switch Component
 function ToggleDarkMode() {
@@ -53,55 +51,22 @@ function ImageExample() {
   );
 }
 const App = () => {
+  const [showLoading, setShowLoading] = useState(true);
+  // setTimeout(() => {
+  //   setShowLoading(false);
+  // }, 2000);
   return (
-    <NativeBaseProvider>
-      <Center
-        _dark={{bg: 'blueGray.900'}}
-        _light={{bg: 'blueGray.50'}}
-        shadow={2}
-        px={4}
-        flex={1}>
-        {/* <Box
-          borderTopWidth="5"
-          borderColor="amber.400"
-          shadow="9"
-          bg="primary.500"
-          borderRadius="md">
-          <ToggleDarkMode />
-          <ToggleDarkMode />
-          <ToggleDarkMode />
+    <>
+      <NativeBaseProvider>
+        <Box position="relative" h={500} bg="gray.300">
+          <Box h={200} bg="blue.700">
+            <Text>123</Text>
+          </Box>
+          <Loading visiable={showLoading} />
         </Box>
-        <ImageExample /> */}
-        {/* <Lottie
-          style={{display: 'flex'}}
-          source={require('./public/images/loading5.json')}
-          autoPlay
-          loop
-        /> */}
-        <Text bgColor="yellow.400">123</Text>
-        <Loading />
-      </Center>
-    </NativeBaseProvider>
+      </NativeBaseProvider>
+    </>
   );
 };
-
-// const styles = StyleSheet.create({
-//   sectionContainer: {
-//     marginTop: 32,
-//     paddingHorizontal: 24,
-//   },
-//   sectionTitle: {
-//     fontSize: 24,
-//     fontWeight: '600',
-//   },
-//   sectionDescription: {
-//     marginTop: 8,
-//     fontSize: 18,
-//     fontWeight: '400',
-//   },
-//   highlight: {
-//     fontWeight: '700',
-//   },
-// });
 
 export default App;
