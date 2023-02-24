@@ -8,64 +8,58 @@
  * @format
  */
 
-import React, {useState} from 'react';
-import {
-  Text,
-  NativeBaseProvider,
-  Box,
-  HStack,
-  Switch,
-  useColorMode,
-  Center,
-  Image,
-} from 'native-base';
-import Loading from './src/components/Loading';
+import React from 'react';
+import {Box, Text, Button, NativeBaseProvider} from 'native-base';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-// Color Switch Component
-function ToggleDarkMode() {
-  const {colorMode, toggleColorMode} = useColorMode();
+function HomeScreen({navigation}) {
   return (
-    <HStack space={2} m={2} alignItems="center">
-      <Text underline>Dark</Text>
-      <Switch
-        isChecked={colorMode === 'light'}
-        onToggle={toggleColorMode}
-        aria-label={
-          colorMode === 'light' ? 'switch to dark mode' : 'switch to light mode'
-        }
-      />
-      <Text>Light</Text>
-    </HStack>
+    <Box flex={1} justifyContent="center" alignItems="center">
+      <Text>Home Screen</Text>
+      <Button shadow={2} onPress={() => navigation.navigate('Details')}>
+        Click me
+      </Button>
+    </Box>
   );
 }
-function ImageExample() {
+
+function DetailsScreen({navigation}) {
   return (
-    <Center>
-      <Image
-        size={150}
-        borderRadius={100}
-        source={require('./public/images/loading.webp')}
-        alt="Alternate Text"
-      />
-    </Center>
+    <Box flex={1} justifyContent="center" alignItems="center">
+      <Text>Details Screen</Text>
+      <Button shadow={2} mt={10} onPress={() => navigation.push('Details')}>
+        Click me
+      </Button>
+      <Button shadow={2} mt={10} onPress={() => navigation.goBack()}>
+        go back
+      </Button>
+      <Button shadow={2} mt={10} onPress={() => navigation.popToTop()}>
+        go to Top Stack
+      </Button>
+      <Button shadow={2} mt={10} onPress={() => navigation.navigate('Home')}>
+        go to Home
+      </Button>
+    </Box>
   );
 }
+
+const Stack = createNativeStackNavigator();
+
 const App = () => {
-  const [showLoading, setShowLoading] = useState(true);
-  // setTimeout(() => {
-  //   setShowLoading(false);
-  // }, 2000);
   return (
-    <>
-      <NativeBaseProvider>
-        <Box position="relative" h={500} bg="gray.300">
-          <Box h={200} bg="blue.700">
-            <Text>123</Text>
-          </Box>
-          <Loading visiable={showLoading} />
-        </Box>
-      </NativeBaseProvider>
-    </>
+    <NativeBaseProvider>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Home">
+          <Stack.Screen
+            name="Home"
+            component={HomeScreen}
+            options={{title: 'Overview'}}
+          />
+          <Stack.Screen name="Details" component={DetailsScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </NativeBaseProvider>
   );
 };
 
